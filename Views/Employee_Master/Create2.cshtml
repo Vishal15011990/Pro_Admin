@@ -1,0 +1,406 @@
+﻿@model Pro_Admin.Models.Employee_Master
+
+@{
+    ViewBag.Title = "Create2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    div span {
+        position: absolute;
+        color: red;
+    }
+
+    div.span_class {
+        color: red;
+        padding: 10px;
+    }
+</style>
+
+
+
+
+@*<link href="~/Controllers/Menu.css" rel="stylesheet" />*@
+<a class="h4">Employee_Master</a>
+<hr />
+<div style="padding:10px;">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-md-4">Name</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="TxtName" />
+                </div>
+                <div>
+                    <br /><span class="span" id="lblName">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Password</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" id="TxtPassword" />
+                </div>
+                <div>
+                    <span class="span_class" id="lblPassword">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Confirm Password</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" id="TxtCnfPassword" onchange="onchangeCnfpwd()" />
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp; <span class="span" id="lblCnfPassword">&nbsp;</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Date Of Birth</label>
+                <div class="col-md-10">
+                    <input type="date" class="form-control" id="TxtDob" />
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp; <span class="span" id="lblDob">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Phone</label>
+                <div class="col-md-10">
+                    <input type="tel" class="form-control" id="TxtPhone" maxlength="10" />
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span class="span" id="lblPhone">&nbsp;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-md-4">Address</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="TxtAddress" />
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;  <span class="span" id="lblAddress">&nbsp;</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Country</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Country_Info.Country_Id, ViewBag.Country as SelectList, "----Select  Country---",
+           htmlAttributes: new { @class = "form-control", @id = "Country" })
+
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;  <span class="span" id="lblCountry">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">State</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.State_info.State_Id, new SelectList(Enumerable.Empty<SelectListItem>(), "State_Id", "State_Name"), "---Select State---",
+htmlAttributes: new { @class = "form-control", @id = "State" })
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span class="span" id="lblState">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">City</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.City_Info.City_Id, new SelectList(Enumerable.Empty<SelectListItem>(), "City_Id", "City_Name"), "----Select City---", htmlAttributes: new { @class = "form-control", @id = "City" })
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span class="span" id="lblCity">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Email</label>
+                <div class="col-md-10">
+                    <input type="email" class="form-control" id="TxtEmail" />
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;  <span class="span" id="lblEmail">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Role</label>
+                <div class="col-md-10">
+                    <select class="form-control" id="TxtRole">
+                        <option value="0">---Select Role---</option>
+                        @foreach (var item in ViewBag.RoleId1)
+                        {
+                            <option value="@item.RoleId">@item.RoleName</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="span" id="lblRole">&nbsp;</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Create" class="btn btn-primary" id="btnCreate" @*onclick="BtnClick()"*@ />
+    </div>
+</div>
+
+
+<div>
+    @Html.Hidden("RedirectToIndex", Url.Action("Index", "Employee_Master"))
+</div>
+
+
+
+
+
+<script>
+
+    function onchangeCnfpwd() {
+        var CnfPassword = $("#TxtCnfPassword").val();
+        var Password = $("#TxtPassword").val();
+        if (Password != CnfPassword || CnfPassword != Password) {
+            $("#lblCnfPassword").html("Enter Password Carefully Password Mismathced").show().fadeOut(2000);
+        }
+
+    }
+
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Country").change(function () {
+            var CountryId = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetState","Employee_Master")',
+                data: { 'Cid': CountryId },
+                success: function (data) {
+                    var state = $("#State");
+                    state.empty();
+                    state.append($('<option/>', {
+                        value: 0,
+                        text: "---Select State---"
+                    }));
+                    $.each(data, function (index, item) {
+                        state.append($('<option/>', {
+                            value: item.Value,
+                            text: item.Text
+                        }));
+                    });
+                }
+            });
+        });
+
+
+
+        $("#State").change(function () {
+            var StateId = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCity","Employee_Master")',
+                data: { 'Sid': StateId },
+                success: function (data) {
+                    var state = $("#City");
+                    state.empty();
+                    state.append($('<option/>', {
+                        value: 0,
+                        text: "---Select City---"
+                    }));
+                    $.each(data, function (index, item) {
+                        state.append($('<option/>', {
+                            value: item.Value,
+                            text: item.Text
+                        }));
+                    });
+                }
+            });
+        });
+
+
+        $("#TxtName").on('focusout', function () {
+            var Name = $("#TxtName").val();
+            if (Name == "") {
+                $("#lblName").html("Please Enter Valid Name").show().fadeOut(2000);
+            }
+        });
+
+        $("#TxtPassword").on('focusout', function () {
+            var Password = $("#TxtPassword").val();
+            if (Password == "") {
+                $("#lblPassword").html("Please enter Password").show().fadeOut(2000);
+            }
+        });
+
+
+        $("#TxtCnfPassword").on('blur',function () {
+            var CnfPassword = $("#TxtCnfPassword").val();
+            var Password = $("#TxtPassword").val();
+            if (CnfPassword == "") {
+                $("#lblCnfPassword").html("Enter Password Carefully").show().fadeOut(2000);
+            }
+        });
+
+
+
+
+        $("#TxtDob").on('focusout', function () {
+            var Dob = $("#TxtDob").val();
+            if (Dob == "") {
+                $("#lblDob").html("Please enter Dob").show().fadeOut(2000);
+            }
+        });
+
+
+        $("#TxtPhone").on('focusout', function () {
+            var phone = $("#TxtPhone").val();
+            if (phone == "" && phone != 10) {
+                $("#lblPhone").html("Please Enter Tour 10digit Phone").show().fadeOut(2000);
+            }
+        });
+
+
+        $("#TxtAddress").on('focusout', function () {
+            var Address = $("#TxtAddress").val();
+            if (Address == "") {
+                $("#lblAddress").html("Please enter Address").show().fadeOut(2000);
+            }
+        });
+
+        $("#Country").on('focusout', function () {
+            var country = $("#Country").val();
+            if (country == 0) {
+                $("#lblCountry").html("Please enter Country").show().fadeOut(2000);
+            }
+        });
+
+        $("#TxtState").on('focusout', function () {
+            var State = $("#TxtState").val();
+            if (State == 0) {
+                $("#lblState").html("Please enter State").show().fadeOut(2000);
+            }
+        });
+
+        $("#TxtCity").on('focusout', function () {
+            var City = $("#TxtCity").val();
+            if (City == 0) {
+                $("#lblCity").html("Please enter City").show().fadeOut(2000);
+            }
+        });
+
+        $("#TxtEmail").on('focusout', function () {
+            var Email = $("#TxtEmail").val();
+            if (Email == "") {
+                $("#lblEmail").html("Please enter Email").show().fadeOut(2000);
+            }
+        });
+
+        $("#TxtRole").on('focusout', function () {
+            var Role = $("#TxtRole").val();
+            if (Role == 0) {
+                $("#lblRole").html("Please enter Role").show().fadeOut(2000);
+            }
+        });
+
+
+        $("#btnCreate").on("click", function () {
+
+        var name = $("#TxtName").val();
+        var password = $("#TxtPassword").val();
+        var CnfPassword = $("#TxtCnfPassword").val();
+        var dob = $("#TxtDob").val();
+        var phone = $("#TxtPhone").val();
+        var address = $("#TxtAddress").val();
+        var country = $("#Country").val();
+        var state = $("#State").val();
+        var city = $("#City").val();
+        var email = $("#TxtEmail").val();
+        var role = $("#TxtRole").val();
+
+            var model = {
+                Name: name,
+                Date_Of_Birth: dob,
+                Phone: phone,
+                Address: address,
+                Country: country,
+                State: state,
+                City: city,
+                EmailId: email,
+                RoleId: role,
+                Password: password
+
+            }
+            //var json = JSON.stringify(model);
+
+            if (name == "") {
+                $("#lblName").html("Please Enter Valid Name").show().fadeOut(2000);
+            }
+            else if (password == "") {
+                $("#lblPassword").html("Please enter Password").show().fadeOut(2000);
+            }
+            else if (CnfPassword == "") {
+                $("#lblCnfPassword").html("Please enter confirm password").show().fadeOut(2000);
+            }
+            else if (phone == "") {
+                $("#lblPhone").html("Please enter Phone").show().fadeOut(2000);
+            }
+            else if (dob == "") {
+                $("#lblDob").html("Please enter Dob").show().fadeOut(2000);
+            }
+            else if (address == "") {
+                $("#lblAddress").html("Please enter Address").show().fadeOut(2000);
+            }
+
+            else if (city == 0) {
+                $("#lblCity").html("Please enter City").show().fadeOut(2000);
+            }
+            else if (state == 0) {
+                $("#lblState").html("Please enter State").show().fadeOut(2000);
+            }
+            else if (country == 0) {
+                $("#lblCountry").html("Please enter Country").show().fadeOut(2000);
+            }
+            else if (email == "") {
+                $("#lblEmail").html("Please enter Email").show().fadeOut(2000);
+            }
+
+            else if (role == 0) {
+                $("#lblRole").html("Please enter Role").show().fadeOut(2000);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    data: model,
+                    url: '@Url.Action("Create2", "Employee_Master")',
+                    success: function (response) {
+                        swal({
+                            title: "Created!",
+                            text: "Data Saved",
+                            icon: "success",
+                            timer: 2000,
+                        }).then(function () {
+                            var url = $("#RedirectToIndex").val();
+                            location.href = url;
+                        });
+                    }, error: function () {
+                        swal("Data Not added")
+                    }
+                });
+            }
+        });
+    });
+
+</script>

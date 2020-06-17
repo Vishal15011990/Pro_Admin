@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="74119d2253514994bfea5396f7bf4723" Name="Diagram1">
+        <EntityTypeShape EntityType="EmployeeModel.City_Info" Width="1.5" PointX="8" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Country_Info" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Employee_Master" Width="1.5" PointX="5.125" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.MasterAdmin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.RoleMaster" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.State_info" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="EmployeeModel.FK_City_Info_State_Info" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeModel.FK_Employee_Master_City" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeModel.FK_Employee_Master_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeModel.FK_State_info_Country_Info" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeModel.FK__Employee___RoleI__17036CC0" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeModel.FK_Employee_Master_State" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,86 @@
+﻿@model Pro_Admin.Models.Employee_Master
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee_Master</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Of_Birth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Of_Birth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailId)
+        </dd>
+
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country_Info.Country_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country_Info.Country_name)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State_info.State_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State_info.State_Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.City_Info.City_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City_Info.City_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmpId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Pro_Admin.Models.Employee_Master>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Of_Birth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailId)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Country_Info.Country_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State_info.State_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City_Info.City_Name)
+        </th>
+        <th>
+            @Html.DisplayName("Action")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Of_Birth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Country_Info.Country_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State_info.State_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City_Info.City_Name)
+            </td>
+
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit","Edit2", new { id = item.EmpId })
+                    <a href="#" class="btnDelete fa fa-trash"></a><input type="hidden" value="@item.EmpId" />
+                }|
+
+                @Html.ActionLink("Details", "Details", new { id = item.EmpId })
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    @Html.Hidden("RedirectToIndex", Url.Action("Index", "Employee_Master"))
+</div>
+
+<script>
+    $(document).ready(function () {
+        swal({ icon: "info", text: "Welcome @User.Identity.Name !", timer: 1500 });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(".btnDelete").on("click", function () {
+            var id = $(this).next().val();
+            swal({
+                title: "Are you sure?",
+                text: "Record Will Not Be Recovered!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Delete",
+                cancelButtonText: "Cancel",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                closeOnEsc: false,
+                closeOnClickOutside: false
+            },function(isConfirm){
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        data: { id: id },
+                        url: '@Url.Action("Delete","Employee_Master")',
+                        dataType: "json",
+                        success: function (response) {
+                            if (response) {
+                                swal("Deleted!","Record has been deleted.","success",function () {
+                                    location.reload();
+                                });
+                            }
+                            
+                        }
+                    });
+                }
+                else {
+                    swal( "Deletion Canceled!","Your Record is Save.","info",function () {
+                        location.reload();
+                    });
+                }
+             });
+         });
+    });
+</script>
