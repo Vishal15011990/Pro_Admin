@@ -142,7 +142,6 @@ namespace Pro_Admin.Controllers
 
         // GET: Employee_Master/Edit/5
         [Authorize(Roles = "Admin")]
-
         public ActionResult Edit2(int? id)
         {
             if (id == null)
@@ -175,7 +174,6 @@ namespace Pro_Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize(Roles = "Admin")]
-
         public ActionResult Edit2( Employee_Master employee_Master)
         {
             if (ModelState.IsValid)

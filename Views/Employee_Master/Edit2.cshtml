@@ -9,14 +9,15 @@
 
 <style>
 
-    div span {
-        position: absolute;
-        color: red;
+    .spanclass {
+        /* top: 10px; */
+        position: relative;
     }
 
-    div.span_class {
+    span {
+        position: relative;
         color: red;
-        padding: 10px;
+        margin-top: 20px;
     }
 </style>
 
@@ -40,8 +41,8 @@
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="TxtName" value="@Model.Name" />
                 </div>
-                <div>
-                    <br /><span class="span" id="lblName">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    <br /><span  id="lblName">&nbsp;</span>
                 </div>
             </div>
 
@@ -69,8 +70,8 @@
                 <div class="col-md-10">
                     <input type="date" class="form-control" id="TxtDob" value="@Model.Date_Of_Birth" />
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp; <span class="span" id="lblDob">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp; <span  id="lblDob">&nbsp;</span>
                 </div>
             </div>
 
@@ -79,8 +80,8 @@
                 <div class="col-md-10">
                     <input type="tel" class="form-control" id="TxtPhone" maxlength="10" value="@Model.Phone" />
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;   <span class="span" id="lblPhone">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span  id="lblPhone">&nbsp;</span>
                 </div>
             </div>
 
@@ -90,8 +91,8 @@
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="TxtAddress" value="@Model.Address" />
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;  <span class="span" id="lblAddress">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="lblAddress">&nbsp;</span>
                 </div>
             </div>
         </div>
@@ -115,8 +116,8 @@
                     @Html.DropDownList("State", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;   <span class="span" id="lblState">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span id="lblState">&nbsp;</span>
                 </div>
             </div>
 
@@ -126,8 +127,8 @@
                     @Html.DropDownList("City", null, htmlAttributes: new { @class = "form-control" })
                    
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;   <span class="span" id="lblCity">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span id="lblCity">&nbsp;</span>
                 </div>
             </div>
 
@@ -136,8 +137,8 @@
                 <div class="col-md-10">
                     <input type="email" class="form-control" id="TxtEmail" value="@Model.EmailId" />
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;  <span class="span" id="lblEmail">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;  <span  id="lblEmail">&nbsp;</span>
                 </div>
             </div>
 
@@ -152,8 +153,8 @@
                         }
                     </select>
                 </div>
-                <div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="span" id="lblRole">&nbsp;</span>
+                <div class="spanclass col-md-10">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="lblRole">&nbsp;</span>
                 </div>
             </div>
         </div>
@@ -405,16 +406,25 @@
                     data: model,
                     url: '@Url.Action("Edit2", "Employee_Master")',
                     success: function (response) {
-                        swal({
-                            title: "Edited!",
-                            text: "Data Updated",
-                            icon: "success",
-                            timer: 2000,
-                        }).then(function () {
-                            var url = $("#RedirectToIndex").val();
-                            location.href = url;
+                        $.alert({
+                            title: 'Success !',
+                            content: 'Record Updated successfully..!',
+                            icon: 'fa fa-rocket',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            buttons: {
+                                okay: {
+                                    text: 'Okay',
+                                    btnClass: 'btn-wide mb-2 mr-2 btn btn-primary form-control',
+                                    action: function (event, ui) {
+                                        $(this).remove();
+                                        var url = $("#RedirectToIndex").val();
+                                        location.href = url;
+                                    }
+                                }
+                            }
                         });
-                    }, error: function () {
+                    },cancel: function () {
                         swal("Data Not added")
                     }
                 });

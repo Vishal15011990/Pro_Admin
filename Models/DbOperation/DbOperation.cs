@@ -169,7 +169,7 @@ namespace Pro_Admin.Models.DbOperation
             }
         }
 
-        public bool delete(int id)
+        public bool Delete(int id)
         {
             using(var context=new EmployeeEntities())
             {
