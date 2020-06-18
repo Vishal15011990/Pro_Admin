@@ -194,10 +194,19 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Employee_Master\Create2.cshtml" />
+    <Content Include="Views\Employee_Master\Edit2.cshtml" />
+    <Content Include="Views\Employee_Master\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Role.cshtml" />
+    <Content Include="Views\Shared\City.cshtml" />
+    <Content Include="Views\Shared\State.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\Bundle.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Employee_MasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -248,7 +257,6 @@
     <Compile Include="WebRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -257,20 +265,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-    <Content Include="Views\Employee_Master\Create.cshtml" />
-    <Content Include="Views\Employee_Master\Details.cshtml" />
-    <Content Include="Views\Employee_Master\Edit.cshtml" />
-    <Content Include="Views\Employee_Master\Index.cshtml" />
-    <Content Include="Views\Shared\State.cshtml" />
-    <Content Include="Views\Shared\City.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\Role.cshtml" />
-    <Content Include="Views\Employee_Master\Create2.cshtml" />
-    <Content Include="Views\Employee_Master\Edit2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
