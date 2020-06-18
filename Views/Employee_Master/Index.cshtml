@@ -92,8 +92,9 @@
                 <td>
                     @if (User.IsInRole("Admin"))
                     {
-                        @Html.ActionLink("Edit", "Edit2", new { id = item.EmpId })
+                        <a class="fa fa-edit" href="@Url.Action("Edit2","Employee_Master",new { id=item.EmpId})"></a>
                         <a href="#" class="btnDelete fa fa-trash"></a><input type="hidden" value="@item.EmpId" />
+
                     }
 
                 </td>
