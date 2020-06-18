@@ -37,11 +37,12 @@ namespace Pro_Admin.Controllers
                 if (isValid)
                 {
                     FormsAuthentication.SetAuthCookie(model.Name, false);
-                    return RedirectToAction("Index", "Employee_Master");
+                    return Json(isValid);
+                    // return View("Index", "Employee_Master");
                 }
             }
                     ModelState.AddModelError("", "Invalid Username and Password");
-            return View();
+            return Json("error");
         }
 
 

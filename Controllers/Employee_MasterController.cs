@@ -22,8 +22,8 @@ namespace Pro_Admin.Controllers
         [Authorize(Roles ="Admin,User")]
         public ActionResult Index()
         {
-            var employee_Master = db.Employee_Master.Include(e => e.City_Info).Include(e => e.Country_Info).Include(e => e.RoleMaster).Include(e => e.State_info);
-            return View(employee_Master.ToList());
+            var employee_Master = db.Employee_Master.Where(x=>x.IsActive==true).Include(e => e.City_Info).Include(e => e.Country_Info).Include(e => e.RoleMaster).Include(e => e.State_info).ToList();
+            return View(employee_Master);
         }
 
 

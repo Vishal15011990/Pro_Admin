@@ -5,44 +5,153 @@
 }
 
 <h2>Login</h2>
+<style>
+    .spanclass {
+        /* top: 10px; */
+        position: relative;
+    }
+
+    span {
+        position: relative;
+        color: red;
+        margin-top: 20px;
+    }
+</style>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>MasterAdminModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+<div style="padding:1px;">
+    <div class="row-lg-12">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="control-label col-md-4">Name</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="TxtName" />
+                </div>
+                <div class="spanclass col-md-10">
+                    <span id="lblName">&nbsp;</span>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" ,@type="password" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <label class="control-label col-md-4">Password</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" id="TxtPassword" />
+                </div>
+                <div class="spanclass col-md-10">
+                    <span id="lblPassword">&nbsp;</span>
+                </div>
             </div>
         </div>
     </div>
-}
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Login" class="btn btn-primary" id="btnLogin" @*onclick="BtnClick()"*@ style="width:500px; left:100px; position:relative;" />
+        </div>
+    </div>
+</div>
+
+
+<div id="la">
+
+    The Pro_Admin License (MIT)
+
+    Copyright (c) 2020 Vishal Kumar
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+    @Html.Hidden("RedirectToIndex", Url.Action("Index", "Employee_Master"))
 </div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $("#la").hide();
+    var pre = document.createElement('pre');
+    //custom style.
+    pre.style.maxHeight = "400px";
+    pre.style.margin = "0";
+    pre.style.padding = "24px";
+    pre.style.whiteSpace = "pre-wrap";
+    pre.style.textAlign = "justify";
+    pre.appendChild(document.createTextNode($('#la').text()));
+    //show as confirm
+    alertify.confirm("License Agreement", pre, function () {
+        alertify.success('Accepted');
+    }, function () {
+        alertify.error('Declined');
+    }).set({ labels: { ok: 'Accept', cancel: 'Decline' }, padding: false }).set('closable', false).set('resizable', false).set('movable', false);
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#btnLogin").on("click", function () {
+            var name = $("#TxtName").val();
+            var password = $("#TxtPassword").val();
+
+            var model = {
+                Name: name,
+                Password: password
+            }
+
+
+            $("#TxtName").on('focusout', function () {
+                var Name = $("#TxtName").val();
+                if (Name == "") {
+                    $("#lblName").html("Please Enter Valid Name").show().fadeOut(2000);
+                }
+            });
+
+            $("#TxtPassword").on('focusout', function () {
+                var Password = $("#TxtPassword").val();
+                if (Password == "") {
+                    $("#lblPassword").html("Please enter Password").show().fadeOut(2000);
+                }
+            });
+
+            if (name == "") {
+                $("#lblName").html("Please Enter Valid Name").show().fadeOut(2000);
+            }
+            else if (password == "") {
+                $("#lblPassword").html("Please enter Password").show().fadeOut(2000);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    data: model,
+                    url: '@Url.Action("Login","Home")',
+                    success: function (response) {
+                        if (response) {
+                            window.location.href = '@Url.Action("Index","Employee_Master")';
+                        }
+                        else {
+                            alertify.alert("Sorry No Data Found");
+                        }
+                    }
+                });
+            }
+        })
+    });
+</script>
