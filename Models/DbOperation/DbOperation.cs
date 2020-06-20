@@ -109,6 +109,21 @@ namespace Pro_Admin.Models.DbOperation
                 return result;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public Employee Details(int id)
         {
             using(var context=new EmployeeEntities())
