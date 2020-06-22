@@ -135,32 +135,33 @@
 
 <script>
     $("#la").hide();
-    var pre = document.createElement('pre');
-    //custom style.
-    pre.style.maxHeight = "400px";
-    pre.style.margin = "0";
-    pre.style.padding = "24px";
-    pre.style.whiteSpace = "pre-wrap";
-    pre.style.textAlign = "justify";
-    pre.appendChild(document.createTextNode($('#la').text()));
-    //show as confirm
-    alertify.confirm("License Agreement", pre, function () {
-        alertify.success('Accepted');
-    }, function () {
-        alertify.error('Declined');
-    }).set({ labels: { ok: 'Accept', cancel: 'Decline' }, padding: false }).set('closable', false).set('resizable', false).set('movable', false);
+    //var pre = document.createElement('pre');
+    ////custom style.
+    //pre.style.maxHeight = "400px";
+    //pre.style.margin = "0";
+    //pre.style.padding = "24px";
+    //pre.style.whiteSpace = "pre-wrap";
+    //pre.style.textAlign = "justify";
+    //pre.appendChild(document.createTextNode($('#la').text()));
+    ////show as confirm
+    //alertify.confirm("License Agreement", pre, function () {
+    //    alertify.success('Accepted');
+    //}, function () {
+    //    alertify.error('Declined');
+    //}).set({ labels: { ok: 'Accept', cancel: 'Decline' }, padding: false }).set('closable', false).set('resizable', false).set('movable', false);
 </script>
 
 
 
-<script>
+@*<script>
         (function ($) {
             if (!$.cookie("Login")) {
                  swal("Welcome", "@User.Identity.Name !", "info")
                 $.cookie("Login", "x");
+
             }
         })(jQuery);
-    </script>
+</script>*@
 
 
 <script>

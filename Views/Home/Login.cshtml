@@ -5,7 +5,7 @@
 
 }
 
-<h2>Login</h2>
+<a href="#" class="txt fa fa-sign-in fa-3x"> Register User</a>
 <style>
     .spanclass {
         /* top: 10px; */
@@ -17,9 +17,27 @@
         color: red;
         margin-top: 20px;
     }
+
+    a.txt {
+        cursor: pointer;
+        text-decoration: none;
+        margin-top: 50px;
+        
+    }
+        a.txt:hover {
+            background: red;
+            box-shadow: 0 0 10px #ff0000,0 0 30px #ff0000,0 0 60px #ff0000,0 0 200px #ff0000;
+            border-radius:3px;
+        }
+
+    .form-group {
+        
+        height: 70px;
+    }
 </style>
 
 <div style="padding:1px;">
+    
     <div class="row-lg-12">
         <div class="col-lg-6">
             <div class="form-group">
@@ -52,12 +70,12 @@
 </div>
 
 
-    <div>
+<div>
 
-        @Html.Hidden("RedirectToIndex", Url.Action("Index", "Employee_Master"))
-    </div>
+    @Html.Hidden("RedirectToIndex", Url.Action("Index", "Employee_Master"))
+</div>
 
-    @*<script>
+@*<script>
         $("#la").hide();
         var pre = document.createElement('pre');
         //custom style.
@@ -75,7 +93,7 @@
         }).set({ labels: { ok: 'Accept', cancel: 'Decline' }, padding: false }).set('closable', false).set('resizable', false).set('movable', false);
     </script>*@
 
-    <script>
+<script>
 
     $(document).ready(function () {
 
@@ -142,4 +160,4 @@
             }
         })
     });
-    </script>
+</script>

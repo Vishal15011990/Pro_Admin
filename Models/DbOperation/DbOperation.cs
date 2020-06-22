@@ -104,6 +104,11 @@ namespace Pro_Admin.Models.DbOperation
                         City_Id = x.City_Info.City_Id,
                         City_Name = x.City_Info.City_Name,
                         State_RefId = x.City_Info.State_RefId,
+                    },
+                    RoleMd=new RoleM()
+                    {
+                        RoleId=x.RoleMaster.RoleId,
+                        RoleName=x.RoleMaster.RoleName
                     }
                 }).ToList();
                 return result;

@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit2";
 }
 
-    <a href="#" class=" fa fa-edit fa-4x clx">Edit Record</a>
+<a href="#" class=" fa fa-edit fa-4x clx">Edit Record</a>
 
 
 <style>
@@ -19,9 +19,14 @@
         color: red;
         margin-top: 20px;
     }
+
     a.clx {
         cursor: pointer;
         text-decoration: none;
+    }
+
+    .form-group {
+        height: 70px;
     }
 </style>
 
@@ -36,41 +41,41 @@
 
 
             <div class="form-group">
-                <label class="control-label col-md-4">Name</label>
+                <label class="control-label col-md-4">User Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="TxtName" value="@Model.Name" />
+                    <input type="text" class="form-control" id="TxtName" readonly value="@Model.Name" />
                 </div>
                 <div class="spanclass col-md-10">
-                    <br /><span  id="lblName">&nbsp;</span>
+                    <br /><span id="lblName">&nbsp;</span>
                 </div>
             </div>
 
             @*<div class="form-group">
-            <label class="control-label col-md-4">Password</label>
-            <div class="col-md-10">
-                <input type="password" class="form-control" id="TxtPassword" value="@Model.Password" />
-            </div>
-            <div>
-                <span class="span_class" id="lblPassword">&nbsp;</span>
-            </div>
-        </div>
+                    <label class="control-label col-md-4">Password</label>
+                    <div class="col-md-10">
+                        <input type="password" class="form-control" id="TxtPassword" value="@Model.Password" />
+                    </div>
+                    <div>
+                        <span class="span_class" id="lblPassword">&nbsp;</span>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-4">Confirm Password</label>
-            <div class="col-md-10">
-                <input type="password" class="form-control" id="TxtCnfPassword" onchange="onchangeCnfpwd()" value="@Model.Password" />
-            </div>
-            <div>
-                &nbsp;&nbsp;&nbsp;&nbsp; <span class="span" id="lblCnfPassword">&nbsp;</span>
-            </div>
-        </div>*@
+                <div class="form-group">
+                    <label class="control-label col-md-4">Confirm Password</label>
+                    <div class="col-md-10">
+                        <input type="password" class="form-control" id="TxtCnfPassword" onchange="onchangeCnfpwd()" value="@Model.Password" />
+                    </div>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp; <span class="span" id="lblCnfPassword">&nbsp;</span>
+                    </div>
+                </div>*@
             <div class="form-group">
-                <label class="control-label col-md-4">Date Of Birth</label>
+                <label class="control-label col-md-4" for="datepicker">Date Of Birth</label>
                 <div class="col-md-10">
-                    <input type="date" class="form-control" id="TxtDob" value="@Model.Date_Of_Birth" />
+                    <input type="text" class="form-control" id="datepicker" value="@Model.Date_Of_Birth" />
                 </div>
                 <div class="spanclass col-md-10">
-                    &nbsp;&nbsp;&nbsp;&nbsp; <span  id="lblDob">&nbsp;</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp; <span id="lblDob">&nbsp;</span>
                 </div>
             </div>
 
@@ -80,7 +85,7 @@
                     <input type="tel" class="form-control" id="TxtPhone" maxlength="10" value="@Model.Phone" />
                 </div>
                 <div class="spanclass col-md-10">
-                    &nbsp;&nbsp;&nbsp;&nbsp;   <span  id="lblPhone">&nbsp;</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;   <span id="lblPhone">&nbsp;</span>
                 </div>
             </div>
 
@@ -97,7 +102,7 @@
         </div>
 
         <div class="col-lg-6">
-            
+
             <div class="form-group">
                 <label class="control-label col-md-4">Country</label>
                 <div class="col-md-10">
@@ -124,7 +129,7 @@
                 <label class="control-label col-md-4">City</label>
                 <div class="col-md-10">
                     @Html.DropDownList("City", null, htmlAttributes: new { @class = "form-control" })
-                   
+
                 </div>
                 <div class="spanclass col-md-10">
                     &nbsp;&nbsp;&nbsp;&nbsp;   <span id="lblCity">&nbsp;</span>
@@ -134,10 +139,10 @@
             <div class="form-group">
                 <label class="control-label col-md-4">Email</label>
                 <div class="col-md-10">
-                    <input type="email" class="form-control" id="TxtEmail" value="@Model.EmailId"  onblur="EmailIdValidate()"/>
+                    <input type="email" class="form-control" id="TxtEmail" value="@Model.EmailId" onblur="EmailIdValidate()" />
                 </div>
                 <div class="spanclass col-md-10">
-                    &nbsp;&nbsp;&nbsp;&nbsp;  <span  id="lblEmail">&nbsp;</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;  <span id="lblEmail">&nbsp;</span>
                 </div>
             </div>
 
@@ -163,7 +168,7 @@
 
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <input type="button" value="Update" class="btn btn-primary" id="btnCreate"  />
+        <input type="button" value="Update" class="btn btn-primary" id="btnCreate" style="width:500px; left:100px; position:relative;" />
     </div>
 </div>
 
@@ -203,6 +208,9 @@
 
 <script>
     $(document).ready(function () {
+        $("#datepicker").datetimepicker({
+            //format: 'DD-MM-YYYY'
+        });
 
         var Regexname = /^([a-zA-Z]{3,16})$/;
         $("#TxtName").on('keypress keydown keyup', function () {
@@ -277,12 +285,30 @@
         });
 
 
-        $("#TxtName").on('focusout', function () {
+        @*$("#TxtName").on('focusout', function () {
             var Name = $("#TxtName").val();
             if (Name == "") {
                 $("#lblName").html("Please Enter Valid Name").show().fadeOut(2000);
             }
-        });
+            else
+            {
+                $.ajax({
+                    type: "GET",
+                    data: { name: Name },
+                    url: '@Url.Action("Nameavailability","Employee_Master")',
+                    success: function (data) {
+                        if (data != "success") {
+                            $("#lblName").html("Already Present Kindly Choose Another").show().fadeOut(2000);
+                            $("#TxtName").css("border-color","Red");
+                        }
+                        else {
+                            $("#lblName").html('<font color="Green">Username Is Available</font>').show().fadeOut(2000);
+                            $("#TxtName").css("border-color", "Green");
+                        }
+                    }
+                });
+            }
+        });*@
 
         $("#TxtPassword").on('focusout', function () {
             var Password = $("#TxtPassword").val();
@@ -303,18 +329,38 @@
 
 
 
-        $("#TxtDob").on('focusout', function () {
-            var Dob = $("#TxtDob").val();
+        $("#datepicker").on('focusout', function () {
+            var Dob = $("#datepicker").val();
             if (Dob == "") {
                 $("#lblDob").html("Please enter Dob").show().fadeOut(2000);
             }
         });
 
 
-        $("#TxtPhone").on('focusout', function () {
+ $("#TxtPhone").on('focusout', function () {
             var phone = $("#TxtPhone").val();
             if (phone == "" && phone != 10) {
-                $("#lblPhone").html("Please Enter your 10-digit Number").show().fadeOut(2000);
+                $("#lblPhone").html("Please Enter Tour 10digit Phone").show().fadeOut(2000);
+            }
+            else
+            {
+                $.ajax({
+                    type: 'Get',
+                    data: {
+                        phone: phone
+                    },
+                    url: '@Url.Action("Phoneavailability", "Employee_Master")',
+                    success: function (data) {
+                        if (data != "success") {
+                            $("#lblPhone").html("Already In Record Re-Enter The Number").show().fadeOut(2000);
+                            $("#TxtPhone").css("border-color", "Red");
+                        }
+                        else {
+                            $("#lblPhone").html("");
+                            $("#TxtPhone").css("border-color", "Green");
+                        }
+                    }
+                });
             }
         });
 
@@ -352,6 +398,24 @@
             if (Email == "") {
                 $("#lblEmail").html("Please enter Email").show().fadeOut(2000);
             }
+             else
+            {
+                $.ajax({
+                    type: 'Get',
+                    data: { emailId: Email },
+                    url: '@Url.Action("Emailavailability", "Employee_Master")',
+                    success: function (data) {
+                        if (data != "success") {
+                            $("#lblEmail").html("Already In Records Re-enter Email").show().fadeOut(2000);
+                            $("#TxtEmail").css("border-color", "Red");
+                        }
+                        else {
+                            $("#lblEmail").html(" ");
+                            $("#TxtEmail").css("border-color", "Green");
+                        }
+                    }
+                });
+            }
         });
 
         $("#TxtRole").on('focusout', function () {
@@ -363,12 +427,12 @@
 
 
         $("#btnCreate").on("click", function () {
-            
+
             var id = $("#empId").val();
         var name = $("#TxtName").val();
         var password = $("#TxtPassword").val();
         var CnfPassword = $("#TxtCnfPassword").val();
-        var dob = $("#TxtDob").val();
+        var dob = $("#datepicker").val();
         var phone = $("#TxtPhone").val();
         var address = $("#TxtAddress").val();
         var country = $("#Country").val();
@@ -434,7 +498,7 @@
                 $("#lblRole").html("Please enter Role").show().fadeOut(2000);
             }
             else {
-                
+
                 $.ajax({
                     type: "POST",
                     data: model,

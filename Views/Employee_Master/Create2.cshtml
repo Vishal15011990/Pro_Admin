@@ -20,6 +20,9 @@
         text-decoration: none;
         margin-top: 20px;
     }
+    .form-group {
+        height: 70px;
+    }
 </style>
 
 
@@ -59,9 +62,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-4">Date Of Birth</label>
+                <label class="control-label col-md-4" for="TxtDob">Date Of Birth</label>
                 <div class="col-md-10">
-                    <input type="date" class="form-control" id="TxtDob" />
+                    <input type="text" class="form-control" id="TxtDob" />
                 </div>
                 <div class="spanclass col-md-10">
                     <span  id="lblDob">&nbsp;</span>
@@ -157,7 +160,9 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
         <input type="button" value="Create" class="btn btn-primary" id="btnCreate" @*onclick="BtnClick()"*@ style="width:500px; left:100px; position:relative;" />
     </div>
 </div>
-
+<div id="loader" style="display:block">
+    <img src="Satisfied.gif" style=" width:150px; height:150px;" >
+</div>
 
 <div>
     @Html.Hidden("RedirectToIndex", Url.Action("Index", "Employee_Master"))
@@ -194,6 +199,12 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
 
 <script>
     $(document).ready(function () {
+
+        $("#TxtDob").datetimepicker({
+            //format: 'DD-MM-YYYY'
+        });
+
+
 
         var $regexname = /^([a-zA-Z]{3,16})$/;
         $("#TxtName").on('keypress keydown keyup', function () {
@@ -278,6 +289,24 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
             if (Name == "") {
                 $("#lblName").html("Please Enter Valid Name").show().fadeOut(2000);
             }
+            else
+            {
+                $.ajax({
+                    type: "GET",
+                    data: { name: Name },
+                    url: '@Url.Action("Nameavailability","Employee_Master")',
+                    success: function (data) {
+                        if (data != "success") {
+                            $("#lblName").html("Already Present Kindly Choose Another").show().fadeOut(2000);
+                            $("#TxtName").css("border-color","Red");
+                        }
+                        else {
+                            $("#lblName").html('<font color="Green">Username Is Available</font>').show().fadeOut(2000);
+                            $("#TxtName").css("border-color", "Green");
+                        }
+                    }
+                });
+            }
         });
 
         $("#TxtPassword").on('focusout', function () {
@@ -311,6 +340,26 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
             var phone = $("#TxtPhone").val();
             if (phone == "" && phone != 10) {
                 $("#lblPhone").html("Please Enter Tour 10digit Phone").show().fadeOut(2000);
+            }
+            else
+            {
+                $.ajax({
+                    type: 'Get',
+                    data: {
+                        phone: phone
+                    },
+                    url: '@Url.Action("Phoneavailability", "Employee_Master")',
+                    success: function (data) {
+                        if (data != "success") {
+                            $("#lblPhone").html("Already In Record Re-Enter The Number").show().fadeOut(2000);
+                            $("#TxtPhone").css("border-color", "Red");
+                        }
+                        else {
+                            $("#lblPhone").html("");
+                            $("#TxtPhone").css("border-color", "Green");
+                        }
+                    }
+                });
             }
         });
 
@@ -348,6 +397,24 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
             if (Email == "") {
                 $("#lblEmail").html("Please enter Email").show().fadeOut(2000);
             }
+             else
+            {
+                $.ajax({
+                    type: 'Get',
+                    data: { emailId: Email },
+                    url: '@Url.Action("Emailavailability", "Employee_Master")',
+                    success: function (data) {
+                        if (data != "success") {
+                            $("#lblEmail").html("Already In Records Re-enter Email").show().fadeOut(2000);
+                            $("#TxtEmail").css("border-color", "Red");
+                        }
+                        else {
+                            $("#lblEmail").html(" ");
+                            $("#TxtEmail").css("border-color", "Green");
+                        }
+                    }
+                });
+            }
         });
 
         $("#TxtRole").on('focusout', function () {
@@ -359,7 +426,7 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
 
 
         $("#btnCreate").on("click", function () {
-
+            $("#loader").show();
         var name = $("#TxtName").val();
         var password = $("#TxtPassword").val();
         var CnfPassword = $("#TxtCnfPassword").val();
@@ -444,9 +511,10 @@ htmlAttributes: new { @class = "form-control", @id = "State" })
                                         location.href = url;
                                     }
                                 }
-                            }
+                            } 
                         });
-                    }, error: function () {
+                        $("#loader").hide();
+                    },error: function () {
                         swal("Data Not added")
                     }
                 });
